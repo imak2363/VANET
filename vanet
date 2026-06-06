@@ -1,0 +1,30 @@
+1.netconvert --osm-files uttara.osm -o uttara.net.xml
+
+2.polyconvert --osm-files uttara.osm --net-file uttara.net.xml --type-file osmPolyconvert.typ.xml -o uttara.poly.xml
+
+3.python /home/ovi/sumo-0.32.0/tools/randomTrips.py -n uttara.net.xml -r uttara.rou.xml -e 50 -l
+
+4.
+<configuration>
+	<input>
+		<net-file value="uttara.net.xml"/>
+		<route-files value="uttara.rou.xml"/>
+		<additional-files value="uttara.poly.xml"/>
+	</input>
+	<time>
+		<begin value="0"/>
+		<end value="100"/>
+		<step-length value="0.1"/>
+	</time>
+
+</configuration>
+
+5.sumo-gui uttara.sumo.cfg
+
+6.sumo -c uttara.sumo.cfg --fcd-output uttara.sumo.xml
+
+7.python /home/ovi/sumo-0.32.0/tools/traceExporter.py --fcd-input uttara2.sumo.xml --ns2config-output uttara2.tcl --ns2mobility-output mobility2.tcl --ns2activity-output activity2.tcl
+
+8./home/ovi/ns-allinone-2.35/ns-2.35/tcl/ex/simple-wireless.tcl
+
+9.
